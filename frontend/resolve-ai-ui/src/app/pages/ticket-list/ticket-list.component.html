@@ -1,0 +1,114 @@
+<div class="page-header">
+    <div>
+        <h1>Support Tickets</h1>
+        <p>Manage customer issues and conversations.</p>
+    </div>
+
+    <button (click)="showCreateForm.set(!showCreateForm())">
+        {{ showCreateForm() ? 'Cancel' : '+ New Ticket' }}
+    </button>
+</div>
+
+<div class="stats-grid">
+    <div class="panel">
+        <p>Total Tickets</p>
+        <h2>{{ totalTickets() }}</h2>
+    </div>
+
+    <div class="panel">
+        <p>Open</p>
+        <h2>{{ openTickets() }}</h2>
+    </div>
+
+    <div class="panel">
+        <p>In Progress</p>
+        <h2>{{ inProgressTickets() }}</h2>
+    </div>
+
+    <div class="panel">
+        <p>Resolved</p>
+        <h2>{{ resolvedTickets() }}</h2>
+    </div>
+</div>
+
+@if (error()) {
+<p class="error">{{ error() }}</p>
+}
+
+@if (showCreateForm()) {
+<form class="panel form-grid" (ngSubmit)="createTicket()" #ticketForm="ngForm">
+
+    <h2>Create Ticket</h2>
+
+    <label>Title</label>
+    <input name="title" [(ngModel)]="newTicket.title" required minlength="3" maxlength="255"
+        placeholder="Enter ticket title" />
+
+    <label>Description</label>
+    <textarea name="description" [(ngModel)]="newTicket.description" required minlength="5" rows="4"></textarea>
+
+    <label>Customer UUID</label>
+    <input name="customer_id" [(ngModel)]="newTicket.customer_id" required placeholder="Paste existing customer UUID" />
+
+    <button type="submit" [disabled]="ticketForm.invalid || saving()">
+        {{ saving() ? 'Creating...' : 'Create Ticket' }}
+    </button>
+</form>
+}
+
+<div class="panel">
+    <div class="toolbar">
+        <input placeholder="Search tickets..." [ngModel]="search()" (ngModelChange)="search.set($event)" />
+
+        <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
+
+            <option value="all">All statuses</option>
+            <option value="open">Open</option>
+            <option value="in_progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+            <option value="closed">Closed</option>
+        </select>
+    </div>
+
+    @if (loading()) {
+    <p>Loading tickets...</p>
+    } @else {
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (ticket of filteredTickets(); track ticket.id) {
+                <tr>
+                    <td>{{ ticket.title }}</td>
+                    <td>
+                        <span class="status" [class]="ticket.status">
+                            {{ ticket.status }}
+                        </span>
+                    </td>
+                    <td>{{ ticket.priority }}</td>
+                    <td>{{ ticket.created_at | date:'mediumDate' }}</td>
+                    <td>
+                        <a [routerLink]="['/tickets', ticket.id]">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="5">No tickets found.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+</div>

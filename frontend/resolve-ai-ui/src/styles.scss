@@ -1,1 +1,259 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    background: #172338;
+    color: white;
+    padding: 24px;
+}
+
+.sidebar h2 {
+    margin-bottom: 5px;
+}
+
+.sidebar p {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.sidebar nav {
+    margin-top: 35px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    background: #334155;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 28px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+h1,
+h2 {
+    margin-top: 0;
+}
+
+.page-header p {
+    color: #64748b;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.stats-grid .panel p {
+    color: #64748b;
+    margin-top: 0;
+}
+
+.stats-grid .panel h2 {
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+    white-space: nowrap;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.form-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #f8fafc;
+    font-size: 14px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.status.open {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status.in_progress {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status.resolved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.closed {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.message {
+    padding: 14px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow-wrap: anywhere;
+}
+
+.customer-message {
+    background: #eff6ff;
+}
+
+.message small {
+    display: block;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.message p {
+    white-space: pre-wrap;
+}
+
+.error {
+    padding: 12px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 170px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .app-shell {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .main-content {
+        padding: 16px;
+    }
+
+    .page-header,
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
