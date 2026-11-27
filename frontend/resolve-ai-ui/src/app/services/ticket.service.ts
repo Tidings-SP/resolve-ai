@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { config } from '../core/config';
+import { UserProfile } from '../models/ticket.model';
 
 import {
     Ticket,
@@ -18,8 +20,14 @@ export class TicketService {
 
     private readonly http = inject(HttpClient);
 
-    private readonly apiUrl =
-        'http://localhost:8000/api/v1/tickets';
+    private readonly apiUrl = `${config.apiUrl}/tickets`;
+
+    getProfile(): Observable<UserProfile> {
+
+        return this.http.get<UserProfile>(
+            `${config.apiUrl}/me`
+        );
+    }
 
     getTickets(): Observable<Ticket[]> {
         return this.http.get<Ticket[]>(this.apiUrl);

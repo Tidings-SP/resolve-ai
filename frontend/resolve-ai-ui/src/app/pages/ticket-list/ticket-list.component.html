@@ -47,8 +47,8 @@
     <label>Description</label>
     <textarea name="description" [(ngModel)]="newTicket.description" required minlength="5" rows="4"></textarea>
 
-    <label>Customer UUID</label>
-    <input name="customer_id" [(ngModel)]="newTicket.customer_id" required placeholder="Paste existing customer UUID" />
+    <!-- <label>Customer UUID</label>
+    <input name="customer_id" [(ngModel)]="newTicket.customer_id" required placeholder="Paste existing customer UUID" /> -->
 
     <button type="submit" [disabled]="ticketForm.invalid || saving()">
         {{ saving() ? 'Creating...' : 'Create Ticket' }}

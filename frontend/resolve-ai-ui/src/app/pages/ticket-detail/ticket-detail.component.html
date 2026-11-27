@@ -59,9 +59,9 @@
 
             <form class="form-grid" (ngSubmit)="sendMessage()" #messageForm="ngForm">
 
-                <label>Author UUID</label>
+                <!-- <label>Author UUID</label> -->
 
-                <input name="authorId" [(ngModel)]="authorId" required />
+                <!-- <input name="authorId" [(ngModel)]="authorId" required /> -->
 
                 <label>Reply</label>
 
@@ -81,6 +81,7 @@
     </div>
 
     <div>
+        @if (profile()?.role === 'agent') {
 
         <form class="panel form-grid" (ngSubmit)="updateTicket()">
 
@@ -109,6 +110,17 @@
             </button>
 
         </form>
+
+        } @else {
+
+        <div class="panel">
+            <h2>Ticket Properties</h2>
+            <p>Status: {{ t.status }}</p>
+            <p>Priority: {{ t.priority }}</p>
+        </div>
+
+        }
+
 
     </div>
 

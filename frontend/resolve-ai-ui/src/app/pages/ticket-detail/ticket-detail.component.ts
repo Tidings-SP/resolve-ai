@@ -8,7 +8,8 @@ import { TicketService } from '../../services/ticket.service';
 import {
     TicketDetail,
     TicketStatus,
-    TicketPriority
+    TicketPriority,
+    UserProfile
 } from '../../models/ticket.model';
 
 @Component({
@@ -25,6 +26,7 @@ export class TicketDetailComponent {
     ticketId = this.route.snapshot.paramMap.get('id')!;
 
     ticket = signal<TicketDetail | null>(null);
+    profile = signal<UserProfile | null>(null);
     loading = signal(false);
     saving = signal(false);
     sending = signal(false);
@@ -33,11 +35,22 @@ export class TicketDetailComponent {
     selectedStatus: TicketStatus = 'open';
     selectedPriority: TicketPriority = 'medium';
 
-    authorId = '';
+
     messageBody = '';
+
+
 
     constructor() {
         this.loadTicket();
+
+        this.ticketService.getProfile().subscribe({
+            next: profile => {
+                this.profile.set(profile);
+            },
+            error: () => {
+                this.error.set('Unable to load user permissions');
+            }
+        });
     }
 
     loadTicket(): void {
@@ -50,7 +63,6 @@ export class TicketDetailComponent {
 
                 this.selectedStatus = ticket.status;
                 this.selectedPriority = ticket.priority;
-                this.authorId = ticket.customer_id;
 
                 this.loading.set(false);
             },
@@ -62,6 +74,8 @@ export class TicketDetailComponent {
     }
 
     updateTicket(): void {
+        if (this.profile()?.role !== 'agent') { return; }
+
         if (this.saving()) return;
 
         this.saving.set(true);
@@ -86,9 +100,9 @@ export class TicketDetailComponent {
     }
 
     sendMessage(): void {
+
         if (
             !this.messageBody.trim() ||
-            !this.authorId.trim() ||
             this.sending()
         ) {
             return;
@@ -97,27 +111,40 @@ export class TicketDetailComponent {
         this.sending.set(true);
         this.error.set('');
 
-        this.ticketService.addMessage(this.ticketId, {
-            author_id: this.authorId,
-            body: this.messageBody.trim()
-        }).subscribe({
+        this.ticketService.addMessage(
+            this.ticketId,
+            {
+                body: this.messageBody.trim()
+            }
+        ).subscribe({
+
             next: message => {
+
                 this.ticket.update(current => {
+
                     if (!current) return current;
 
                     return {
                         ...current,
-                        messages: [...current.messages, message]
+                        messages: [
+                            ...current.messages,
+                            message
+                        ]
                     };
                 });
 
                 this.messageBody = '';
                 this.sending.set(false);
             },
+
             error: err => {
-                this.error.set('Unable to send message: ' + err.message);
+                this.error.set(
+                    'Unable to send message: ' + err.message
+                );
+
                 this.sending.set(false);
             }
+
         });
     }
 }

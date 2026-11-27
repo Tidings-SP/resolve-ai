@@ -1,13 +1,29 @@
 <div class="app-shell">
 
+  @if (auth.session()) {
+
   <aside class="sidebar">
+
     <h2>ResolveAI</h2>
     <p>AI Support Platform</p>
+
+    <p>{{ auth.session()?.user?.email }}</p>
 
     <nav>
       <a routerLink="/tickets">Tickets</a>
     </nav>
+
+    <button class="logout-button" (click)="logout()">
+      Sign out
+    </button>
+
+    @if (logoutError()) {
+    <p>{{ logoutError() }}</p>
+    }
+
   </aside>
+
+  }
 
   <main class="main-content">
     <router-outlet></router-outlet>

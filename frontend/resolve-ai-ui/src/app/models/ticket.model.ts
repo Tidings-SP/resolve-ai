@@ -23,7 +23,10 @@ export interface Ticket {
 export interface TicketCreate {
     title: string;
     description: string;
-    customer_id: string;
+}
+
+export interface TicketMessageCreate {
+    body: string;
 }
 
 export interface TicketUpdate {
@@ -39,11 +42,13 @@ export interface TicketMessage {
     created_at: string;
 }
 
-export interface TicketMessageCreate {
-    author_id: string;
-    body: string;
-}
-
 export interface TicketDetail extends Ticket {
     messages: TicketMessage[];
+}
+
+export interface UserProfile {
+    id: string;
+    email: string;
+    full_name: string;
+    role: 'customer' | 'agent';
 }

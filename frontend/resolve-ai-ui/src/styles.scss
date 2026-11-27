@@ -224,6 +224,16 @@ th {
     border-radius: 6px;
 }
 
+.logout-button {
+    width: 100%;
+    margin-top: 24px;
+    background: #475569;
+}
+
+.sidebar p {
+    overflow-wrap: anywhere;
+}
+
 @media (max-width: 900px) {
     .sidebar {
         width: 170px;

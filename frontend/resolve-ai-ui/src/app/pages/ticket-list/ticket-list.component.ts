@@ -31,8 +31,7 @@ export class TicketListComponent {
 
     newTicket: TicketCreate = {
         title: '',
-        description: '',
-        customer_id: ''
+        description: ''
     };
 
     totalTickets = computed(() => this.tickets().length);
@@ -89,7 +88,6 @@ export class TicketListComponent {
         if (
             this.newTicket.title.trim().length < 3 ||
             this.newTicket.description.trim().length < 5 ||
-            !this.newTicket.customer_id.trim() ||
             this.saving()
         ) {
             return;
@@ -104,8 +102,7 @@ export class TicketListComponent {
 
                 this.newTicket = {
                     title: '',
-                    description: '',
-                    customer_id: ''
+                    description: ''
                 };
 
                 this.showCreateForm.set(false);
