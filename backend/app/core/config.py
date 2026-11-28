@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     APP_ENV: str = "development"
 
     DATABASE_URL: str
+    SUPABASE_URL: str = ""
+    SUPABASE_PUBLISHABLE_KEY: str = ""
 
     OLLAMA_BASE_URL: str = "http://localhost:11434"
     OLLAMA_MODEL: str = ""

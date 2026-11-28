@@ -11,7 +11,6 @@ class TicketCreate(BaseModel):
 
     description: str = Field(min_length=5)
 
-    customer_id: uuid.UUID
 
 
 class TicketResponse(BaseModel):

@@ -67,7 +67,6 @@ class TicketUpdate(BaseModel):
 
 
 class TicketMessageCreate(BaseModel):
-    author_id: uuid.UUID
     body: str = Field(min_length=1, max_length=10000)
 
 
